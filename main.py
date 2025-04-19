@@ -49,12 +49,11 @@ def save_last_scrape_time(timestamp_float):
         ON CONFLICT (id) DO UPDATE SET last_scraped_utc = EXCLUDED.last_scraped_utc;
     """, (dt,))
 
-
 # --- Reddit API ---
 reddit = praw.Reddit(
-    client_id="REDDIT_CLIENT_ID",
-    client_secret="5nDoHZTLtNBanqxQUywc-JobaD0UCg",
-    user_agent="REDDIT_CLIENT_SECRET"
+    client_id=os.getenv("REDDIT_CLIENT_ID"),
+    client_secret=os.getenv("REDDIT_CLIENT_SECRET"),
+    user_agent="wsb-scraper"
 )
 
 # --- PostgreSQL connection ---
@@ -63,7 +62,7 @@ conn = psycopg2.connect(
     port=5432,
     dbname="postgres",
     user="postgres.zvlnpzespbffztxlnlea",
-    password="SUPABASE_PASSWORD",
+    password=os.getenv("SUPABASE_PASSWORD"),
     sslmode="require"
 )
 cursor = conn.cursor()
