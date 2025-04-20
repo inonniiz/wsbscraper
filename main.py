@@ -74,8 +74,8 @@ subreddit = reddit.subreddit("wallstreetbets")
 for submission in subreddit.new(limit=100):
     if submission.link_flair_text != "DD":
         continue
-    #if submission.created_utc <= last_scraped:
-       # continue
+    if submission.created_utc <= last_scraped:
+        continue
 
     created_time = datetime.utcfromtimestamp(submission.created_utc)
     scraped_time = datetime.utcnow()
